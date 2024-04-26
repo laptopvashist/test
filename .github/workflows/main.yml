@@ -17,6 +17,9 @@ jobs:
 
       - name: Install SSH key
         run: echo "${{ secrets.SSH_KEY }}" > ~/key && chmod 600 ~/key
+
+      - name: Copy files to EC2 instance
+        run: scp -o StrictHostKeyChecking=no -r -i ~/key ./index.html ubuntu@65.2.11.233:/var/www/html/
   
       - name: SSH into EC2 instance and restart server
         run: |
