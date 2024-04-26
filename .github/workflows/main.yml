@@ -16,14 +16,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install SSH key
-        run: echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+        run: echo "${{ secrets.SSH_KEY }}" > ~/key && chmod 600 ~/key
   
       - name: Copy files to EC2 instance
         run: scp -r index.html ubuntu@65.2.11.233:/var/www/html/
   
       - name: SSH into EC2 instance and restart server
         run: |
-          ssh -i ~/.ssh/id_rsa ubuntu@65.2.11.233 << 'EOF'
+          ssh -i ~/key ubuntu@65.2.11.233 << 'EOF'
           cd /var/www/html/
           systemctl restart nginx
           # Add commands to restart server or any other necessary actions
