@@ -20,7 +20,7 @@ jobs:
   
       - name: SSH into EC2 instance and restart server
         run: |
-          ssh -i ~/key ubuntu@65.2.11.233 << 'EOF'
+          ssh -i ~/key ubuntu@65.2.11.233 -o StrictHostKeyChecking=no << 'EOF'
           cd /var/www/html/
           systemctl restart nginx
           # Add commands to restart server or any other necessary actions
