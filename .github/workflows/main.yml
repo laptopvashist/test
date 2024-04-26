@@ -22,6 +22,6 @@ jobs:
         run: |
           ssh -i ~/key ubuntu@65.2.11.233 -o StrictHostKeyChecking=no << 'EOF'
           cd /var/www/html/
-          systemctl restart nginx
+          sudo systemctl restart nginx
           # Add commands to restart server or any other necessary actions
           EOF
