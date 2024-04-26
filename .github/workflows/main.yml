@@ -1,0 +1,30 @@
+name: Push-to-EC2
+
+# Trigger deployment only on push to main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to EC2 on master branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+
+      - name: Install SSH key
+        run: echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+  
+      - name: Copy files to EC2 instance
+        run: scp -r index.html ubuntu@65.2.11.233:/var/www/html/
+  
+      - name: SSH into EC2 instance and restart server
+        run: |
+          ssh -i ~/.ssh/id_rsa ubuntu@65.2.11.233 << 'EOF'
+          cd /var/www/html/
+          systemctl restart nginx
+          # Add commands to restart server or any other necessary actions
+          EOF
