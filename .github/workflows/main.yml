@@ -19,7 +19,7 @@ jobs:
         run: echo "${{ secrets.SSH_KEY }}" > ~/key && chmod 600 ~/key
   
       - name: Copy files to EC2 instance
-        run: scp -r index.html ubuntu@65.2.11.233:/var/www/html/
+        run: scp -r index.html -i ~/key ubuntu@65.2.11.233:/var/www/html/
   
       - name: SSH into EC2 instance and restart server
         run: |
