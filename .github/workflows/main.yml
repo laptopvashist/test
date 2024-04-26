@@ -19,12 +19,12 @@ jobs:
         run: echo "${{ secrets.SSH_KEY }}" > ~/key && chmod 600 ~/key
 
       - name: Copy files to EC2 instance
-        run: scp -o StrictHostKeyChecking=no -r -i ~/key ./index.html ubuntu@65.2.11.233:/var/www/html/
+        run: scp -o StrictHostKeyChecking=no -r -i ~/key ./index.html ubuntu@65.2.11.233:~
   
       - name: SSH into EC2 instance and restart server
         run: |
           ssh -i ~/key ubuntu@65.2.11.233 -o StrictHostKeyChecking=no << 'EOF'
-          cd /var/www/html/
+          sudo cp -r ~/index.html /var/www/html/
           sudo systemctl restart nginx
           # Add commands to restart server or any other necessary actions
           EOF
